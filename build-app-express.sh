@@ -11,6 +11,8 @@ npm install express ejs path serve-favicon fs dotenv
 # 3. Membuat file index.js dengan konten yang diberikan
 echo "Membuat file index.js..."
 cat <<EOL > index.js
+require('dotenv').config()
+
 const express = require('express');
 const path = require('path');
 const favicon = require("serve-favicon");
