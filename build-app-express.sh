@@ -75,4 +75,9 @@ router.get('/', (req, res) => {
 module.exports = router;
 EOL
 
+# 9. Membuat file views/partials/header.ejs dan footer.ejs dengan isi kosong
+echo "Membuat file views/partials/header.ejs dan footer.ejs..."
+touch views/partials/header.ejs
+touch views/partials/footer.ejs
+
 echo "Proses selesai! Aplikasi Express.js siap digunakan."
