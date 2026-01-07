@@ -995,73 +995,71 @@
         </div>
     </div>
 
-<!-- FIXED EPISODE MODAL - Replace the episode modal section in your HTML -->
-
-<!-- Episode Modal -->
-<div class="modal-overlay" id="episodeModal">
-    <div class="modal">
-        <div class="modal-header">
-            <h3 id="episodeModalTitle">Add New Episode</h3>
-            <button class="close-btn" onclick="closeEpisodeModal()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                </svg>
-            </button>
-        </div>
-        <div class="modal-body">
-            <div class="form-grid">
-                <div class="form-group form-group-full">
-                    <label class="form-label">Episode Title *</label>
-                    <input type="text" class="form-input" id="episodeTitle" required>
-                </div>
-                <div class="form-group form-group-full">
-                    <label class="form-label">Episode URL *</label>
-                    <input type="url" class="form-input" id="episodeUrl" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Episode Number</label>
-                    <input type="number" class="form-input" id="episodeNumber" placeholder="e.g. 1">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Release Date</label>
-                    <input type="date" class="form-input" id="episodeReleaseDate">
-                </div>
-                <div class="form-group form-group-full">
-                    <label class="form-label">Thumbnail URL</label>
-                    <input type="url" class="form-input" id="episodeThumb">
-                </div>
-                
-                <!-- Streaming Links -->
-                <div class="form-group form-group-full">
-                    <label class="form-label">Streaming Links</label>
-                    <div id="streamingLinksContainer"></div>
-                    <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
-                        <input type="text" class="form-input" id="streamProvider" placeholder="Provider (e.g. HLS, MP4)" style="flex: 0 0 180px;">
-                        <input type="url" class="form-input" id="streamUrl" placeholder="Stream URL" style="flex: 1;">
-                        <button type="button" class="btn btn-sm btn-secondary" onclick="addStreamingLink()">Add</button>
+    <!-- Episode Modal -->
+    <div class="modal-overlay" id="episodeModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="episodeModalTitle">Add New Episode</h3>
+                <button class="close-btn" onclick="closeEpisodeModal()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-grid">
+                    <div class="form-group form-group-full">
+                        <label class="form-label">Episode Title *</label>
+                        <input type="text" class="form-input" id="episodeTitle" required>
                     </div>
-                </div>
+                    <div class="form-group form-group-full">
+                        <label class="form-label">Episode URL *</label>
+                        <input type="url" class="form-input" id="episodeUrl" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Episode Number</label>
+                        <input type="number" class="form-input" id="episodeNumber" placeholder="e.g. 1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Release Date</label>
+                        <input type="date" class="form-input" id="episodeReleaseDate">
+                    </div>
+                    <div class="form-group form-group-full">
+                        <label class="form-label">Thumbnail URL</label>
+                        <input type="url" class="form-input" id="episodeThumb">
+                    </div>
+                    
+                    <!-- Streaming Links -->
+                    <div class="form-group form-group-full">
+                        <label class="form-label">Streaming Links</label>
+                        <div id="streamingLinksContainer"></div>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                            <input type="text" class="form-input" id="streamProvider" placeholder="Provider (e.g. HLS, MP4)" style="flex: 0 0 180px;">
+                            <input type="url" class="form-input" id="streamUrl" placeholder="Stream URL" style="flex: 1;">
+                            <button type="button" class="btn btn-sm btn-secondary" onclick="addStreamingLink()">Add</button>
+                        </div>
+                    </div>
 
-                <!-- Download Links with Quality -->
-                <div class="form-group form-group-full">
-                    <label class="form-label">Download Links</label>
-                    <div id="downloadLinksContainer"></div>
-                    <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
-                        <input type="text" class="form-input" id="downloadQuality" placeholder="Quality (e.g. 720p)" style="flex: 0 0 120px;">
-                        <input type="text" class="form-input" id="downloadProvider" placeholder="Provider (e.g. GDrive)" style="flex: 0 0 180px;">
-                        <input type="url" class="form-input" id="downloadUrl" placeholder="Download URL" style="flex: 1;">
-                        <button type="button" class="btn btn-sm btn-secondary" onclick="addDownloadLink()">Add</button>
+                    <!-- Download Links with Quality -->
+                    <div class="form-group form-group-full">
+                        <label class="form-label">Download Links</label>
+                        <div id="downloadLinksContainer"></div>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                            <input type="text" class="form-input" id="downloadQuality" placeholder="Quality (e.g. 720p)" style="flex: 0 0 120px;">
+                            <input type="text" class="form-input" id="downloadProvider" placeholder="Provider (e.g. GDrive)" style="flex: 0 0 180px;">
+                            <input type="url" class="form-input" id="downloadUrl" placeholder="Download URL" style="flex: 1;">
+                            <button type="button" class="btn btn-sm btn-secondary" onclick="addDownloadLink()">Add</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" onclick="closeEpisodeModal()">Cancel</button>
-            <button class="btn btn-primary" onclick="saveEpisode()">Save Episode</button>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeEpisodeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveEpisode()">Save Episode</button>
+            </div>
         </div>
     </div>
-</div>
 
     <div class="loading" id="loading">
         <div class="spinner"></div>
@@ -1132,6 +1130,8 @@
 
                 if (body && method !== 'GET') {
                     options.body = JSON.stringify(body);
+                    console.log('📤 REQUEST:', method, endpoint);
+                    console.log('📦 BODY:', JSON.stringify(body, null, 2));
                 }
 
                 const response = await fetch(`${config.apiBaseUrl}${endpoint}`, options);
@@ -1143,9 +1143,11 @@
                     throw new Error(data.message || 'Request failed');
                 }
 
+                console.log('✅ RESPONSE:', data);
                 return data;
             } catch (error) {
                 hideLoading();
+                console.error('❌ ERROR:', error);
                 throw error;
             }
         }
@@ -1248,7 +1250,6 @@
             selectedGenres = [];
             document.getElementById('seriesModalTitle').textContent = 'Add New Series';
             
-            // Reset form
             document.getElementById('seriesTitle').value = '';
             document.getElementById('seriesUrl').value = '';
             document.getElementById('seriesThumbnail').value = '';
@@ -1473,6 +1474,9 @@
             document.getElementById('streamingLinksContainer').innerHTML = '';
             document.getElementById('downloadLinksContainer').innerHTML = '';
             
+            console.log('🎬 Opening create episode modal');
+            console.log('📊 Initial state - Streaming links:', streamingLinks.length, 'Download links:', downloadLinks.length);
+            
             document.getElementById('episodeModal').classList.add('active');
         }
 
@@ -1499,54 +1503,6 @@
                 renderDownloadLinks();
 
                 document.getElementById('episodeModal').classList.add('active');
-            } catch (error) {
-                showNotification(error.message, 'error');
-            }
-        }
-
-        async function saveEpisode() {
-            const title = document.getElementById('episodeTitle').value.trim();
-            const url = document.getElementById('episodeUrl').value.trim();
-
-            if (!title || !url) {
-                showNotification('Title and URL are required', 'error');
-                return;
-            }
-
-            const body = {
-                title,
-                url,
-                episode_number: document.getElementById('episodeNumber').value ? parseInt(document.getElementById('episodeNumber').value) : null,
-                release_date: document.getElementById('episodeReleaseDate').value || new Date().toISOString(),
-                thumb_eps: document.getElementById('episodeThumb').value.trim() || null,
-                streamingLinks: streamingLinks.length > 0 ? streamingLinks : undefined,
-                downloadLinks: downloadLinks.length > 0 ? downloadLinks : undefined
-            };
-
-            try {
-                if (currentEpisodeId) {
-                    await apiRequest(`/episodes/${currentEpisodeId}`, 'PATCH', body);
-                    showNotification('Episode updated successfully', 'success');
-                } else {
-                    await apiRequest(`/series/${currentSeriesId}/episodes`, 'POST', body);
-                    showNotification('Episode created successfully', 'success');
-                }
-                closeEpisodeModal();
-                loadEpisodes();
-            } catch (error) {
-                showNotification(error.message, 'error');
-            }
-        }
-
-        async function deleteEpisode(id) {
-            if (!confirm('Are you sure you want to delete this episode?')) {
-                return;
-            }
-
-            try {
-                await apiRequest(`/episodes/${id}`, 'DELETE');
-                showNotification('Episode deleted successfully', 'success');
-                loadEpisodes();
             } catch (error) {
                 showNotification(error.message, 'error');
             }
@@ -1580,128 +1536,152 @@
             `).join('');
         }
 
-        // ==================== LINK MANAGEMENT ====================
+        // ==================== LINK MANAGEMENT - FIXED ====================
 
-// ==================== FIXED LINK MANAGEMENT FUNCTIONS ====================
-// Copy paste this to replace the existing functions in your dashboard
-
-// Add Streaming Link
-function addStreamingLink() {
-    const provider = document.getElementById('streamProvider').value.trim();
-    const url = document.getElementById('streamUrl').value.trim();
-    
-    if (provider && url) {
-        streamingLinks.push({ provider, url });
-        console.log('✅ Added streaming link:', { provider, url });
-        renderStreamingLinks();
-        document.getElementById('streamProvider').value = '';
-        document.getElementById('streamUrl').value = '';
-    } else {
-        showNotification('Provider and URL are required', 'error');
-    }
-}
-
-function removeStreamingLink(index) {
-    streamingLinks.splice(index, 1);
-    renderStreamingLinks();
-}
-
-function renderStreamingLinks() {
-    const container = document.getElementById('streamingLinksContainer');
-    container.innerHTML = streamingLinks.map((link, index) => `
-        <div class="link-item">
-            <span style="flex: 0 0 150px; color: var(--text-dim); font-weight: 500;">${link.provider}</span>
-            <span style="flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace; font-size: 0.85rem;">${link.url}</span>
-            <button type="button" class="btn btn-sm btn-danger" onclick="removeStreamingLink(${index})">Remove</button>
-        </div>
-    `).join('');
-}
-
-// Add Download Link with Quality
-function addDownloadLink() {
-    const quality = document.getElementById('downloadQuality').value.trim();
-    const provider = document.getElementById('downloadProvider').value.trim();
-    const url = document.getElementById('downloadUrl').value.trim();
-    
-    if (provider && url) {
-        downloadLinks.push({ quality: quality || null, provider, url });
-        console.log('✅ Added download link:', { quality, provider, url });
-        renderDownloadLinks();
-        document.getElementById('downloadQuality').value = '';
-        document.getElementById('downloadProvider').value = '';
-        document.getElementById('downloadUrl').value = '';
-    } else {
-        showNotification('Provider and URL are required', 'error');
-    }
-}
-
-function removeDownloadLink(index) {
-    downloadLinks.splice(index, 1);
-    renderDownloadLinks();
-}
-
-function renderDownloadLinks() {
-    const container = document.getElementById('downloadLinksContainer');
-    container.innerHTML = downloadLinks.map((link, index) => `
-        <div class="link-item">
-            <span style="flex: 0 0 100px; color: var(--text-dim); font-weight: 500;">${link.quality || 'N/A'}</span>
-            <span style="flex: 0 0 150px; color: var(--text-dim); font-weight: 500;">${link.provider}</span>
-            <span style="flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace; font-size: 0.85rem;">${link.url}</span>
-            <button type="button" class="btn btn-sm btn-danger" onclick="removeDownloadLink(${index})">Remove</button>
-        </div>
-    `).join('');
-}
-
-// Save Episode with Proper Debugging
-async function saveEpisode() {
-    const title = document.getElementById('episodeTitle').value.trim();
-    const url = document.getElementById('episodeUrl').value.trim();
-
-    if (!title || !url) {
-        showNotification('Title and URL are required', 'error');
-        return;
-    }
-
-    const body = {
-        title,
-        url,
-        episode_number: document.getElementById('episodeNumber').value ? parseInt(document.getElementById('episodeNumber').value) : null,
-        release_date: document.getElementById('episodeReleaseDate').value || new Date().toISOString(),
-        thumb_eps: document.getElementById('episodeThumb').value.trim() || null
-    };
-
-    // Only add links if they exist
-    if (streamingLinks.length > 0) {
-        body.streamingLinks = streamingLinks;
-    }
-    if (downloadLinks.length > 0) {
-        body.downloadLinks = downloadLinks;
-    }
-
-    // Debug logging
-    console.log('📤 Saving episode...');
-    console.log('Episode Data:', body);
-    console.log('Streaming Links Count:', streamingLinks.length);
-    console.log('Download Links Count:', downloadLinks.length);
-
-    try {
-        if (currentEpisodeId) {
-            console.log(`🔄 Updating episode ${currentEpisodeId}`);
-            await apiRequest(`/episodes/${currentEpisodeId}`, 'PATCH', body);
-            showNotification('Episode updated successfully', 'success');
-        } else {
-            console.log(`➕ Creating new episode for series ${currentSeriesId}`);
-            const response = await apiRequest(`/series/${currentSeriesId}/episodes`, 'POST', body);
-            console.log('✅ Episode created:', response);
-            showNotification('Episode created successfully', 'success');
+        function addStreamingLink() {
+            const provider = document.getElementById('streamProvider').value.trim();
+            const url = document.getElementById('streamUrl').value.trim();
+            
+            if (provider && url) {
+                streamingLinks.push({ provider, url });
+                console.log('✅ Added streaming link:', { provider, url });
+                console.log('📊 Total streaming links:', streamingLinks.length, streamingLinks);
+                renderStreamingLinks();
+                document.getElementById('streamProvider').value = '';
+                document.getElementById('streamUrl').value = '';
+            } else {
+                showNotification('Provider and URL are required', 'error');
+            }
         }
-        closeEpisodeModal();
-        loadEpisodes();
-    } catch (error) {
-        console.error('❌ Failed to save episode:', error);
-        showNotification(`Failed to save episode: ${error.message}`, 'error');
-    }
-}
+
+        function removeStreamingLink(index) {
+            streamingLinks.splice(index, 1);
+            console.log('🗑️ Removed streaming link. Total:', streamingLinks.length);
+            renderStreamingLinks();
+        }
+
+        function renderStreamingLinks() {
+            const container = document.getElementById('streamingLinksContainer');
+            container.innerHTML = streamingLinks.map((link, index) => `
+                <div class="link-item">
+                    <span style="flex: 0 0 150px; color: var(--text-dim); font-weight: 500;">${link.provider}</span>
+                    <span style="flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace; font-size: 0.85rem;">${link.url}</span>
+                    <button type="button" class="btn btn-sm btn-danger" onclick="removeStreamingLink(${index})">Remove</button>
+                </div>
+            `).join('');
+        }
+
+        function addDownloadLink() {
+            const quality = document.getElementById('downloadQuality').value.trim();
+            const provider = document.getElementById('downloadProvider').value.trim();
+            const url = document.getElementById('downloadUrl').value.trim();
+            
+            if (provider && url) {
+                downloadLinks.push({ quality: quality || null, provider, url });
+                console.log('✅ Added download link:', { quality, provider, url });
+                console.log('📊 Total download links:', downloadLinks.length, downloadLinks);
+                renderDownloadLinks();
+                document.getElementById('downloadQuality').value = '';
+                document.getElementById('downloadProvider').value = '';
+                document.getElementById('downloadUrl').value = '';
+            } else {
+                showNotification('Provider and URL are required', 'error');
+            }
+        }
+
+        function removeDownloadLink(index) {
+            downloadLinks.splice(index, 1);
+            console.log('🗑️ Removed download link. Total:', downloadLinks.length);
+            renderDownloadLinks();
+        }
+
+        function renderDownloadLinks() {
+            const container = document.getElementById('downloadLinksContainer');
+            container.innerHTML = downloadLinks.map((link, index) => `
+                <div class="link-item">
+                    <span style="flex: 0 0 100px; color: var(--text-dim); font-weight: 500;">${link.quality || 'N/A'}</span>
+                    <span style="flex: 0 0 150px; color: var(--text-dim); font-weight: 500;">${link.provider}</span>
+                    <span style="flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: monospace; font-size: 0.85rem;">${link.url}</span>
+                    <button type="button" class="btn btn-sm btn-danger" onclick="removeDownloadLink(${index})">Remove</button>
+                </div>
+            `).join('');
+        }
+
+        // ==================== SAVE EPISODE - FIXED ====================
+
+        async function saveEpisode() {
+            const title = document.getElementById('episodeTitle').value.trim();
+            const url = document.getElementById('episodeUrl').value.trim();
+
+            if (!title || !url) {
+                showNotification('Title and URL are required', 'error');
+                return;
+            }
+
+            const body = {
+                title,
+                url,
+                episode_number: document.getElementById('episodeNumber').value ? parseInt(document.getElementById('episodeNumber').value) : null,
+                release_date: document.getElementById('episodeReleaseDate').value || new Date().toISOString(),
+                thumb_eps: document.getElementById('episodeThumb').value.trim() || null
+            };
+
+            // CRITICAL: Add links to body
+            if (streamingLinks.length > 0) {
+                body.streamingLinks = streamingLinks;
+            }
+            if (downloadLinks.length > 0) {
+                body.downloadLinks = downloadLinks;
+            }
+
+            // Debug logging
+            console.log('');
+            console.log('='.repeat(60));
+            console.log('📤 SAVING EPISODE');
+            console.log('='.repeat(60));
+            console.log('Episode Title:', body.title);
+            console.log('Episode URL:', body.url);
+            console.log('Episode Number:', body.episode_number);
+            console.log('🎥 Streaming Links Count:', streamingLinks.length);
+            console.log('Streaming Links:', JSON.stringify(streamingLinks, null, 2));
+            console.log('💾 Download Links Count:', downloadLinks.length);
+            console.log('Download Links:', JSON.stringify(downloadLinks, null, 2));
+            console.log('📦 Complete Payload:', JSON.stringify(body, null, 2));
+            console.log('='.repeat(60));
+
+            try {
+                if (currentEpisodeId) {
+                    console.log(`🔄 Updating episode ${currentEpisodeId}`);
+                    await apiRequest(`/episodes/${currentEpisodeId}`, 'PATCH', body);
+                    showNotification('Episode updated successfully', 'success');
+                } else {
+                    console.log(`➕ Creating new episode for series ${currentSeriesId}`);
+                    const response = await apiRequest(`/series/${currentSeriesId}/episodes`, 'POST', body);
+                    console.log('✅ Episode created:', response);
+                    showNotification('Episode created successfully', 'success');
+                }
+                closeEpisodeModal();
+                loadEpisodes();
+            } catch (error) {
+                console.error('❌ Failed to save episode:', error);
+                showNotification(`Failed to save episode: ${error.message}`, 'error');
+            }
+        }
+
+        async function deleteEpisode(id) {
+            if (!confirm('Are you sure you want to delete this episode?')) {
+                return;
+            }
+
+            try {
+                await apiRequest(`/episodes/${id}`, 'DELETE');
+                showNotification('Episode deleted successfully', 'success');
+                loadEpisodes();
+            } catch (error) {
+                showNotification(error.message, 'error');
+            }
+        }
+
         // ==================== PAGINATION ====================
 
         function updatePagination() {
@@ -1812,6 +1792,12 @@ async function saveEpisode() {
                 closeEpisodeModal();
             }
         });
+
+        console.log('🚀 Dashboard initialized!');
+        console.log('💡 Tips:');
+        console.log('   - Check console for detailed logs');
+        console.log('   - Links are logged when added/removed');
+        console.log('   - Full payload shown before save');
     </script>
 </body>
 </html>
