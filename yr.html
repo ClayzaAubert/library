@@ -6,7 +6,7 @@
     <title>Series Management Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #0F172A;
@@ -44,7 +44,6 @@
             min-height: 100vh;
         }
 
-        /* Sidebar */
         .sidebar {
             background: var(--primary);
             border-right: 1px solid var(--border);
@@ -116,7 +115,6 @@
             justify-content: center;
         }
 
-        /* Main Content */
         .main-content {
             padding: 2rem;
             overflow-y: auto;
@@ -144,7 +142,6 @@
             align-items: center;
         }
 
-        /* Buttons */
         .btn {
             padding: 0.625rem 1.25rem;
             border-radius: 0.5rem;
@@ -193,7 +190,6 @@
             font-size: 0.875rem;
         }
 
-        /* Search and Filters */
         .controls {
             background: var(--bg-card);
             padding: 1.5rem;
@@ -248,7 +244,6 @@
             color: var(--text-dim);
         }
 
-        /* Table */
         .table-container {
             background: var(--bg-card);
             border-radius: 0.75rem;
@@ -379,7 +374,6 @@
             border-color: var(--danger);
         }
 
-        /* Modal */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -404,7 +398,7 @@
             border: 1px solid var(--border);
             border-radius: 1rem;
             width: 90%;
-            max-width: 600px;
+            max-width: 700px;
             max-height: 90vh;
             overflow-y: auto;
             animation: slideUp 0.3s ease;
@@ -514,6 +508,21 @@
             margin-top: 0.5rem;
         }
 
+        .link-item {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: var(--primary);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            align-items: center;
+        }
+
+        .link-item input {
+            flex: 1;
+        }
+
         .loading {
             display: none;
             position: fixed;
@@ -582,6 +591,55 @@
             border-left: 4px solid var(--danger);
         }
 
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-dim);
+        }
+
+        .breadcrumb a {
+            color: var(--accent);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .series-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .series-card-thumb {
+            width: 100px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .series-card-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .series-card-meta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -638,12 +696,15 @@
             .controls-row {
                 grid-template-columns: 1fr;
             }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <div class="dashboard">
-        <!-- Sidebar -->
         <aside class="sidebar">
             <div class="logo">
                 <h1>ADMIN PANEL</h1>
@@ -659,14 +720,6 @@
                         </svg>
                     </div>
                     <span>Series</span>
-                </div>
-                <div class="nav-item" data-view="episodes">
-                    <div class="nav-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                        </svg>
-                    </div>
-                    <span>Episodes</span>
                 </div>
             </nav>
 
@@ -684,7 +737,6 @@
             </nav>
         </aside>
 
-        <!-- Main Content -->
         <main class="main-content">
             <!-- Series View -->
             <div id="seriesView" class="view">
@@ -701,7 +753,6 @@
                     </div>
                 </div>
 
-                <!-- Search & Filters -->
                 <div class="controls">
                     <div class="controls-row">
                         <div class="form-group">
@@ -725,45 +776,12 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label class="form-label">Country</label>
-                            <select class="form-select" id="countryFilter">
-                                <option value="">All Countries</option>
-                                <option value="JP">Japan</option>
-                                <option value="CN">China</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="controls-row">
-                        <div class="form-group">
-                            <label class="form-label">Genres (comma separated)</label>
-                            <input type="text" class="form-input" id="genresFilter" placeholder="e.g. Action,Fantasy">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Sort By</label>
-                            <select class="form-select" id="sortBy">
-                                <option value="updated_at">Updated At</option>
-                                <option value="title">Title</option>
-                                <option value="rating">Rating</option>
-                                <option value="release_date">Release Date</option>
-                                <option value="total_episodes">Episodes</option>
-                                <option value="count_views">Views</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Order</label>
-                            <select class="form-select" id="sortOrder">
-                                <option value="desc">Descending</option>
-                                <option value="asc">Ascending</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
                             <label class="form-label">&nbsp;</label>
                             <button class="btn btn-primary" onclick="loadSeries()">Apply Filters</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Series Table -->
                 <div class="table-container">
                     <table class="table">
                         <thead>
@@ -773,13 +791,12 @@
                                 <th>Status</th>
                                 <th>Episodes</th>
                                 <th>Rating</th>
-                                <th>Views</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="seriesTableBody">
                             <tr>
-                                <td colspan="7" class="empty-state">
+                                <td colspan="6" class="empty-state">
                                     <h3>No series found</h3>
                                     <p>Add your first series to get started</p>
                                 </td>
@@ -798,10 +815,84 @@
 
             <!-- Episodes View -->
             <div id="episodesView" class="view" style="display: none;">
-                <div class="header">
-                    <h2>Episodes Management</h2>
+                <div class="breadcrumb">
+                    <a onclick="showSeriesView()">Series</a>
+                    <span>/</span>
+                    <span id="currentSeriesTitle">Episodes</span>
                 </div>
-                <p style="color: var(--text-dim);">Select a series from the Series page to manage its episodes.</p>
+
+                <div id="seriesInfoCard"></div>
+
+                <div class="header">
+                    <h2>Episodes</h2>
+                    <div class="header-actions">
+                        <button class="btn btn-secondary btn-sm" onclick="showSeriesView()">Back to Series</button>
+                        <button class="btn btn-primary" onclick="openCreateEpisodeModal()">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            Add Episode
+                        </button>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <div class="controls-row">
+                        <div class="form-group">
+                            <label class="form-label">Search</label>
+                            <input type="text" class="form-input" id="episodeSearchInput" placeholder="Search episodes...">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Sort By</label>
+                            <select class="form-select" id="episodeSortBy">
+                                <option value="episode_number">Episode Number</option>
+                                <option value="release_date">Release Date</option>
+                                <option value="created_at">Created At</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Order</label>
+                            <select class="form-select" id="episodeSortOrder">
+                                <option value="desc">Descending</option>
+                                <option value="asc">Ascending</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">&nbsp;</label>
+                            <button class="btn btn-primary" onclick="loadEpisodes()">Apply Filters</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Episode</th>
+                                <th>Ep #</th>
+                                <th>Release Date</th>
+                                <th>Views</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="episodesTableBody">
+                            <tr>
+                                <td colspan="5" class="empty-state">
+                                    <h3>No episodes found</h3>
+                                    <p>Add your first episode to get started</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="pagination">
+                        <div class="pagination-info" id="episodePaginationInfo">Showing 0 of 0</div>
+                        <div class="pagination-controls">
+                            <button class="btn btn-sm btn-secondary" onclick="previousEpisodePage()">Previous</button>
+                            <button class="btn btn-sm btn-secondary" onclick="nextEpisodePage()">Next</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Settings View -->
@@ -812,7 +903,7 @@
                 <div class="controls">
                     <div class="form-group">
                         <label class="form-label">API Base URL</label>
-                        <input type="text" class="form-input" id="apiBaseUrl" value="">
+                        <input type="text" class="form-input" id="apiBaseUrl" placeholder="https://api.youra.site/api/admin">
                     </div>
                     <div class="form-group" style="margin-top: 1rem;">
                         <label class="form-label">Admin Token</label>
@@ -824,11 +915,11 @@
         </main>
     </div>
 
-    <!-- Create/Edit Series Modal -->
+    <!-- Series Modal -->
     <div class="modal-overlay" id="seriesModal">
         <div class="modal">
             <div class="modal-header">
-                <h3 id="modalTitle">Add New Series</h3>
+                <h3 id="seriesModalTitle">Add New Series</h3>
                 <button class="close-btn" onclick="closeSeriesModal()">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -837,67 +928,65 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="seriesForm">
-                    <div class="form-grid">
-                        <div class="form-group form-group-full">
-                            <label class="form-label">Title *</label>
-                            <input type="text" class="form-input" id="seriesTitle" required>
-                        </div>
-                        <div class="form-group form-group-full">
-                            <label class="form-label">URL *</label>
-                            <input type="url" class="form-input" id="seriesUrl" required>
-                        </div>
-                        <div class="form-group form-group-full">
-                            <label class="form-label">Thumbnail URL</label>
-                            <input type="url" class="form-input" id="seriesThumbnail">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Type</label>
-                            <select class="form-select" id="seriesType">
-                                <option value="anime">Anime</option>
-                                <option value="donghua">Donghua</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Country</label>
-                            <select class="form-select" id="seriesCountry">
-                                <option value="JP">Japan</option>
-                                <option value="CN">China</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Status</label>
-                            <select class="form-select" id="seriesStatus">
-                                <option value="Ongoing">Ongoing</option>
-                                <option value="Completed">Completed</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Rating</label>
-                            <input type="text" class="form-input" id="seriesRating" placeholder="e.g. 8.5">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Release Date</label>
-                            <input type="date" class="form-input" id="seriesReleaseDate">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Total Episodes</label>
-                            <input type="number" class="form-input" id="seriesTotalEpisodes" value="0">
-                        </div>
-                        <div class="form-group form-group-full">
-                            <label class="form-label">Description</label>
-                            <textarea class="form-input" id="seriesDescription"></textarea>
-                        </div>
-                        <div class="form-group form-group-full">
-                            <label class="form-label">Genres</label>
-                            <div class="genres-input" id="genresContainer"></div>
-                            <div class="genre-input-wrapper">
-                                <input type="text" class="form-input" id="genreInput" placeholder="Add genre..." style="flex: 1;">
-                                <button type="button" class="btn btn-sm btn-secondary" onclick="addGenre()">Add</button>
-                            </div>
+                <div class="form-grid">
+                    <div class="form-group form-group-full">
+                        <label class="form-label">Title *</label>
+                        <input type="text" class="form-input" id="seriesTitle" required>
+                    </div>
+                    <div class="form-group form-group-full">
+                        <label class="form-label">URL *</label>
+                        <input type="url" class="form-input" id="seriesUrl" required>
+                    </div>
+                    <div class="form-group form-group-full">
+                        <label class="form-label">Thumbnail URL</label>
+                        <input type="url" class="form-input" id="seriesThumbnail">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Type</label>
+                        <select class="form-select" id="seriesType">
+                            <option value="anime">Anime</option>
+                            <option value="donghua">Donghua</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Country</label>
+                        <select class="form-select" id="seriesCountry">
+                            <option value="JP">Japan</option>
+                            <option value="CN">China</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Status</label>
+                        <select class="form-select" id="seriesStatus">
+                            <option value="Ongoing">Ongoing</option>
+                            <option value="Completed">Completed</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Rating</label>
+                        <input type="text" class="form-input" id="seriesRating" placeholder="e.g. 8.5">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Release Date</label>
+                        <input type="date" class="form-input" id="seriesReleaseDate">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Total Episodes</label>
+                        <input type="number" class="form-input" id="seriesTotalEpisodes" value="0">
+                    </div>
+                    <div class="form-group form-group-full">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-input" id="seriesDescription"></textarea>
+                    </div>
+                    <div class="form-group form-group-full">
+                        <label class="form-label">Genres</label>
+                        <div class="genres-input" id="genresContainer"></div>
+                        <div class="genre-input-wrapper">
+                            <input type="text" class="form-input" id="genreInput" placeholder="Add genre..." style="flex: 1;">
+                            <button type="button" class="btn btn-sm btn-secondary" onclick="addGenre()">Add</button>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" onclick="closeSeriesModal()">Cancel</button>
@@ -906,18 +995,81 @@
         </div>
     </div>
 
-    <!-- Loading Spinner -->
+    <!-- Episode Modal -->
+    <div class="modal-overlay" id="episodeModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="episodeModalTitle">Add New Episode</h3>
+                <button class="close-btn" onclick="closeEpisodeModal()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-grid">
+                    <div class="form-group form-group-full">
+                        <label class="form-label">Episode Title *</label>
+                        <input type="text" class="form-input" id="episodeTitle" required>
+                    </div>
+                    <div class="form-group form-group-full">
+                        <label class="form-label">Episode URL *</label>
+                        <input type="url" class="form-input" id="episodeUrl" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Episode Number</label>
+                        <input type="number" class="form-input" id="episodeNumber" placeholder="e.g. 1">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Release Date</label>
+                        <input type="date" class="form-input" id="episodeReleaseDate">
+                    </div>
+                    <div class="form-group form-group-full">
+                        <label class="form-label">Thumbnail URL</label>
+                        <input type="url" class="form-input" id="episodeThumb">
+                    </div>
+                    
+                    <!-- Streaming Links -->
+                    <div class="form-group form-group-full">
+                        <label class="form-label">Streaming Links</label>
+                        <div id="streamingLinksContainer"></div>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                            <input type="text" class="form-input" id="streamProvider" placeholder="Provider" style="flex: 0 0 150px;">
+                            <input type="url" class="form-input" id="streamUrl" placeholder="Stream URL" style="flex: 1;">
+                            <button type="button" class="btn btn-sm btn-secondary" onclick="addStreamingLink()">Add</button>
+                        </div>
+                    </div>
+
+                    <!-- Download Links -->
+                    <div class="form-group form-group-full">
+                        <label class="form-label">Download Links</label>
+                        <div id="downloadLinksContainer"></div>
+                        <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+                            <input type="text" class="form-input" id="downloadProvider" placeholder="Provider" style="flex: 0 0 150px;">
+                            <input type="url" class="form-input" id="downloadUrl" placeholder="Download URL" style="flex: 1;">
+                            <button type="button" class="btn btn-sm btn-secondary" onclick="addDownloadLink()">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeEpisodeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveEpisode()">Save Episode</button>
+            </div>
+        </div>
+    </div>
+
     <div class="loading" id="loading">
         <div class="spinner"></div>
     </div>
 
-    <!-- Notification -->
     <div class="notification" id="notification">
         <span id="notificationMessage"></span>
     </div>
 
     <script>
-        // Configuration
+        // State
         let config = {
             apiBaseUrl: '',
             adminToken: ''
@@ -927,9 +1079,19 @@
         let currentLimit = 20;
         let totalItems = 0;
         let currentSeriesId = null;
+        let currentSeries = null;
+        let currentEpisodeId = null;
         let selectedGenres = [];
+        let streamingLinks = [];
+        let downloadLinks = [];
 
-        // Load settings from localStorage
+        // Episode state
+        let currentEpisodePage = 0;
+        let currentEpisodeLimit = 50;
+        let totalEpisodeItems = 0;
+
+        // ==================== SETTINGS ====================
+
         function loadSettings() {
             const saved = localStorage.getItem('adminConfig');
             if (saved) {
@@ -939,15 +1101,15 @@
             }
         }
 
-        // Save settings
         function saveSettings() {
-            config.apiBaseUrl = document.getElementById('apiBaseUrl').value;
+            config.apiBaseUrl = document.getElementById('apiBaseUrl').value.replace(/\/$/, '');
             config.adminToken = document.getElementById('adminToken').value;
             localStorage.setItem('adminConfig', JSON.stringify(config));
             showNotification('Settings saved successfully', 'success');
         }
 
-        // API Request Helper
+        // ==================== API ====================
+
         async function apiRequest(endpoint, method = 'GET', body = null) {
             if (!config.adminToken) {
                 showNotification('Please configure your admin token in Settings', 'error');
@@ -985,14 +1147,15 @@
             }
         }
 
-        // Load Series
+        // ==================== SERIES ====================
+
         async function loadSeries() {
             try {
                 const params = new URLSearchParams({
                     limit: currentLimit,
                     offset: currentPage * currentLimit,
-                    sort: document.getElementById('sortBy').value,
-                    order: document.getElementById('sortOrder').value
+                    sort: 'updated_at',
+                    order: 'desc'
                 });
 
                 const search = document.getElementById('searchInput').value;
@@ -1004,12 +1167,6 @@
                 const status = document.getElementById('statusFilter').value;
                 if (status) params.append('status', status);
 
-                const country = document.getElementById('countryFilter').value;
-                if (country) params.append('series_country', country);
-
-                const genres = document.getElementById('genresFilter').value;
-                if (genres) params.append('genre_names', genres);
-
                 const data = await apiRequest(`/series?${params}`);
                 
                 displaySeries(data.data.items);
@@ -1020,14 +1177,13 @@
             }
         }
 
-        // Display Series
         function displaySeries(items) {
             const tbody = document.getElementById('seriesTableBody');
             
             if (items.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="7" class="empty-state">
+                        <td colspan="6" class="empty-state">
                             <h3>No series found</h3>
                             <p>Try adjusting your filters</p>
                         </td>
@@ -1040,7 +1196,7 @@
                 <tr>
                     <td>
                         <div class="series-info">
-                            <img src="${series.thumbnail || 'https://via.placeholder.com/60x85'}" alt="${series.title}" class="thumbnail">
+                            <img src="${series.thumbnail || 'https://via.placeholder.com/60x85'}" alt="${series.title}" class="thumbnail" onerror="this.src='https://via.placeholder.com/60x85'">
                             <div class="series-details">
                                 <h3>${series.title}</h3>
                                 <div class="series-meta">${series.release_date || 'N/A'}</div>
@@ -1059,10 +1215,9 @@
                     </td>
                     <td>${series.total_episodes}</td>
                     <td>${series.rating || 'N/A'}</td>
-                    <td>${series.count_views || 0}</td>
                     <td>
                         <div class="actions">
-                            <button class="icon-btn" onclick="viewEpisodes('${series.id}')" title="View Episodes">
+                            <button class="icon-btn" onclick='viewEpisodes(${JSON.stringify(series).replace(/'/g, "&apos;")})' title="View Episodes">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <polygon points="5 3 19 12 5 21 5 3"></polygon>
                                 </svg>
@@ -1085,35 +1240,24 @@
             `).join('');
         }
 
-        // Pagination
-        function updatePagination() {
-            const start = currentPage * currentLimit + 1;
-            const end = Math.min((currentPage + 1) * currentLimit, totalItems);
-            document.getElementById('paginationInfo').textContent = 
-                `Showing ${start}-${end} of ${totalItems}`;
-        }
-
-        function nextPage() {
-            if ((currentPage + 1) * currentLimit < totalItems) {
-                currentPage++;
-                loadSeries();
-            }
-        }
-
-        function previousPage() {
-            if (currentPage > 0) {
-                currentPage--;
-                loadSeries();
-            }
-        }
-
-        // Modal Functions
         function openCreateSeriesModal() {
             currentSeriesId = null;
             selectedGenres = [];
-            document.getElementById('modalTitle').textContent = 'Add New Series';
-            document.getElementById('seriesForm').reset();
+            document.getElementById('seriesModalTitle').textContent = 'Add New Series';
+            
+            // Reset form
+            document.getElementById('seriesTitle').value = '';
+            document.getElementById('seriesUrl').value = '';
+            document.getElementById('seriesThumbnail').value = '';
+            document.getElementById('seriesType').value = 'anime';
+            document.getElementById('seriesCountry').value = 'JP';
+            document.getElementById('seriesStatus').value = 'Ongoing';
+            document.getElementById('seriesRating').value = '';
+            document.getElementById('seriesReleaseDate').value = '';
+            document.getElementById('seriesTotalEpisodes').value = '0';
+            document.getElementById('seriesDescription').value = '';
             document.getElementById('genresContainer').innerHTML = '';
+            
             document.getElementById('seriesModal').classList.add('active');
         }
 
@@ -1128,7 +1272,7 @@
                 const series = data.data.anime;
                 const genres = data.data.genres;
 
-                document.getElementById('modalTitle').textContent = 'Edit Series';
+                document.getElementById('seriesModalTitle').textContent = 'Edit Series';
                 document.getElementById('seriesTitle').value = series.title;
                 document.getElementById('seriesUrl').value = series.url;
                 document.getElementById('seriesThumbnail').value = series.thumbnail || '';
@@ -1150,8 +1294,8 @@
         }
 
         async function saveSeries() {
-            const title = document.getElementById('seriesTitle').value;
-            const url = document.getElementById('seriesUrl').value;
+            const title = document.getElementById('seriesTitle').value.trim();
+            const url = document.getElementById('seriesUrl').value.trim();
 
             if (!title || !url) {
                 showNotification('Title and URL are required', 'error');
@@ -1161,14 +1305,14 @@
             const body = {
                 title,
                 url,
-                thumbnail: document.getElementById('seriesThumbnail').value || null,
+                thumbnail: document.getElementById('seriesThumbnail').value.trim() || null,
                 series_type: document.getElementById('seriesType').value,
                 series_country: document.getElementById('seriesCountry').value,
                 status: document.getElementById('seriesStatus').value,
-                rating: document.getElementById('seriesRating').value || null,
+                rating: document.getElementById('seriesRating').value.trim() || null,
                 release_date: document.getElementById('seriesReleaseDate').value || null,
                 total_episodes: parseInt(document.getElementById('seriesTotalEpisodes').value) || 0,
-                description: document.getElementById('seriesDescription').value || null,
+                description: document.getElementById('seriesDescription').value.trim() || null,
                 genres: selectedGenres
             };
 
@@ -1201,7 +1345,212 @@
             }
         }
 
-        // Genre Functions
+        // ==================== EPISODES ====================
+
+        function viewEpisodes(series) {
+            currentSeries = series;
+            currentSeriesId = series.id;
+            currentEpisodePage = 0;
+            
+            document.getElementById('currentSeriesTitle').textContent = series.title;
+            
+            const seriesCard = `
+                <div class="series-card">
+                    <img src="${series.thumbnail || 'https://via.placeholder.com/100x140'}" class="series-card-thumb" onerror="this.src='https://via.placeholder.com/100x140'">
+                    <div class="series-card-info">
+                        <h3>${series.title}</h3>
+                        <div class="series-card-meta">
+                            <span class="badge ${series.series_type === 'anime' ? 'badge-anime' : 'badge-donghua'}">${series.series_type}</span>
+                            <span class="badge ${series.status === 'Ongoing' ? 'badge-ongoing' : 'badge-completed'}">${series.status}</span>
+                            <span>${series.total_episodes} Episodes</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('seriesInfoCard').innerHTML = seriesCard;
+            
+            document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
+            document.getElementById('episodesView').style.display = 'block';
+            
+            loadEpisodes();
+        }
+
+        function showSeriesView() {
+            currentSeriesId = null;
+            currentSeries = null;
+            document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
+            document.getElementById('seriesView').style.display = 'block';
+            loadSeries();
+        }
+
+        async function loadEpisodes() {
+            if (!currentSeriesId) return;
+            
+            try {
+                const params = new URLSearchParams({
+                    limit: currentEpisodeLimit,
+                    offset: currentEpisodePage * currentEpisodeLimit,
+                    sort: document.getElementById('episodeSortBy').value,
+                    order: document.getElementById('episodeSortOrder').value
+                });
+
+                const search = document.getElementById('episodeSearchInput').value;
+                if (search) params.append('q', search);
+
+                const data = await apiRequest(`/series/${currentSeriesId}/episodes?${params}`);
+                
+                displayEpisodes(data.data.items);
+                totalEpisodeItems = data.meta.total;
+                updateEpisodePagination();
+            } catch (error) {
+                showNotification(error.message, 'error');
+            }
+        }
+
+        function displayEpisodes(items) {
+            const tbody = document.getElementById('episodesTableBody');
+            
+            if (items.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="empty-state">
+                            <h3>No episodes found</h3>
+                            <p>Add your first episode to get started</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = items.map(episode => `
+                <tr>
+                    <td>
+                        <div class="series-info">
+                            <img src="${episode.thumb_eps || currentSeries.thumbnail || 'https://via.placeholder.com/60x85'}" alt="${episode.title}" class="thumbnail" onerror="this.src='https://via.placeholder.com/60x85'">
+                            <div class="series-details">
+                                <h3>${episode.title}</h3>
+                                <div class="series-meta">${new Date(episode.created_at).toLocaleDateString()}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>${episode.episode_number || 'N/A'}</td>
+                    <td>${episode.release_date ? new Date(episode.release_date).toLocaleDateString() : 'N/A'}</td>
+                    <td>${episode.count_views || 0}</td>
+                    <td>
+                        <div class="actions">
+                            <button class="icon-btn" onclick="editEpisode('${episode.id}')" title="Edit">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                </svg>
+                            </button>
+                            <button class="icon-btn danger" onclick="deleteEpisode('${episode.id}')" title="Delete">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function openCreateEpisodeModal() {
+            currentEpisodeId = null;
+            streamingLinks = [];
+            downloadLinks = [];
+            
+            document.getElementById('episodeModalTitle').textContent = 'Add New Episode';
+            document.getElementById('episodeTitle').value = '';
+            document.getElementById('episodeUrl').value = '';
+            document.getElementById('episodeNumber').value = '';
+            document.getElementById('episodeReleaseDate').value = '';
+            document.getElementById('episodeThumb').value = '';
+            document.getElementById('streamingLinksContainer').innerHTML = '';
+            document.getElementById('downloadLinksContainer').innerHTML = '';
+            
+            document.getElementById('episodeModal').classList.add('active');
+        }
+
+        function closeEpisodeModal() {
+            document.getElementById('episodeModal').classList.remove('active');
+        }
+
+        async function editEpisode(id) {
+            try {
+                currentEpisodeId = id;
+                const data = await apiRequest(`/episodes/${id}`);
+                const episode = data.data.episode;
+
+                document.getElementById('episodeModalTitle').textContent = 'Edit Episode';
+                document.getElementById('episodeTitle').value = episode.title;
+                document.getElementById('episodeUrl').value = episode.url;
+                document.getElementById('episodeNumber').value = episode.episode_number || '';
+                document.getElementById('episodeReleaseDate').value = episode.release_date ? episode.release_date.split('T')[0] : '';
+                document.getElementById('episodeThumb').value = episode.thumb_eps || '';
+
+                streamingLinks = [];
+                downloadLinks = [];
+                renderStreamingLinks();
+                renderDownloadLinks();
+
+                document.getElementById('episodeModal').classList.add('active');
+            } catch (error) {
+                showNotification(error.message, 'error');
+            }
+        }
+
+        async function saveEpisode() {
+            const title = document.getElementById('episodeTitle').value.trim();
+            const url = document.getElementById('episodeUrl').value.trim();
+
+            if (!title || !url) {
+                showNotification('Title and URL are required', 'error');
+                return;
+            }
+
+            const body = {
+                title,
+                url,
+                episode_number: document.getElementById('episodeNumber').value ? parseInt(document.getElementById('episodeNumber').value) : null,
+                release_date: document.getElementById('episodeReleaseDate').value || new Date().toISOString(),
+                thumb_eps: document.getElementById('episodeThumb').value.trim() || null,
+                streamingLinks: streamingLinks.length > 0 ? streamingLinks : undefined,
+                downloadLinks: downloadLinks.length > 0 ? downloadLinks : undefined
+            };
+
+            try {
+                if (currentEpisodeId) {
+                    await apiRequest(`/episodes/${currentEpisodeId}`, 'PATCH', body);
+                    showNotification('Episode updated successfully', 'success');
+                } else {
+                    await apiRequest(`/series/${currentSeriesId}/episodes`, 'POST', body);
+                    showNotification('Episode created successfully', 'success');
+                }
+                closeEpisodeModal();
+                loadEpisodes();
+            } catch (error) {
+                showNotification(error.message, 'error');
+            }
+        }
+
+        async function deleteEpisode(id) {
+            if (!confirm('Are you sure you want to delete this episode?')) {
+                return;
+            }
+
+            try {
+                await apiRequest(`/episodes/${id}`, 'DELETE');
+                showNotification('Episode deleted successfully', 'success');
+                loadEpisodes();
+            } catch (error) {
+                showNotification(error.message, 'error');
+            }
+        }
+
+        // ==================== GENRE MANAGEMENT ====================
+
         function addGenre() {
             const input = document.getElementById('genreInput');
             const genre = input.value.trim();
@@ -1223,38 +1572,113 @@
             container.innerHTML = selectedGenres.map(genre => `
                 <div class="genre-tag">
                     <span>${genre}</span>
-                    <button onclick="removeGenre('${genre}')">×</button>
+                    <button onclick="removeGenre('${genre.replace(/'/g, "\\'")}')">×</button>
                 </div>
             `).join('');
         }
 
-        // Episodes
-        function viewEpisodes(seriesId) {
-            // Navigate to episodes view for this series
-            showNotification('Episodes management coming soon', 'success');
+        // ==================== LINK MANAGEMENT ====================
+
+        function addStreamingLink() {
+            const provider = document.getElementById('streamProvider').value.trim();
+            const url = document.getElementById('streamUrl').value.trim();
+            
+            if (provider && url) {
+                streamingLinks.push({ provider, url });
+                renderStreamingLinks();
+                document.getElementById('streamProvider').value = '';
+                document.getElementById('streamUrl').value = '';
+            }
         }
 
-        // Navigation
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', function() {
-                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-                this.classList.add('active');
+        function removeStreamingLink(index) {
+            streamingLinks.splice(index, 1);
+            renderStreamingLinks();
+        }
 
-                const view = this.dataset.view;
-                document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
-                
-                if (view === 'series') {
-                    document.getElementById('seriesView').style.display = 'block';
-                    loadSeries();
-                } else if (view === 'episodes') {
-                    document.getElementById('episodesView').style.display = 'block';
-                } else if (view === 'settings') {
-                    document.getElementById('settingsView').style.display = 'block';
-                }
-            });
-        });
+        function renderStreamingLinks() {
+            const container = document.getElementById('streamingLinksContainer');
+            container.innerHTML = streamingLinks.map((link, index) => `
+                <div class="link-item">
+                    <span style="flex: 0 0 150px; color: var(--text-dim);">${link.provider}</span>
+                    <span style="flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${link.url}</span>
+                    <button type="button" class="btn btn-sm btn-danger" onclick="removeStreamingLink(${index})">Remove</button>
+                </div>
+            `).join('');
+        }
 
-        // Utilities
+        function addDownloadLink() {
+            const provider = document.getElementById('downloadProvider').value.trim();
+            const url = document.getElementById('downloadUrl').value.trim();
+            
+            if (provider && url) {
+                downloadLinks.push({ provider, url });
+                renderDownloadLinks();
+                document.getElementById('downloadProvider').value = '';
+                document.getElementById('downloadUrl').value = '';
+            }
+        }
+
+        function removeDownloadLink(index) {
+            downloadLinks.splice(index, 1);
+            renderDownloadLinks();
+        }
+
+        function renderDownloadLinks() {
+            const container = document.getElementById('downloadLinksContainer');
+            container.innerHTML = downloadLinks.map((link, index) => `
+                <div class="link-item">
+                    <span style="flex: 0 0 150px; color: var(--text-dim);">${link.provider}</span>
+                    <span style="flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${link.url}</span>
+                    <button type="button" class="btn btn-sm btn-danger" onclick="removeDownloadLink(${index})">Remove</button>
+                </div>
+            `).join('');
+        }
+
+        // ==================== PAGINATION ====================
+
+        function updatePagination() {
+            const start = currentPage * currentLimit + 1;
+            const end = Math.min((currentPage + 1) * currentLimit, totalItems);
+            document.getElementById('paginationInfo').textContent = `Showing ${start}-${end} of ${totalItems}`;
+        }
+
+        function nextPage() {
+            if ((currentPage + 1) * currentLimit < totalItems) {
+                currentPage++;
+                loadSeries();
+            }
+        }
+
+        function previousPage() {
+            if (currentPage > 0) {
+                currentPage--;
+                loadSeries();
+            }
+        }
+
+        function updateEpisodePagination() {
+            const start = currentEpisodePage * currentEpisodeLimit + 1;
+            const end = Math.min((currentEpisodePage + 1) * currentEpisodeLimit, totalEpisodeItems);
+            document.getElementById('episodePaginationInfo').textContent = `Showing ${start}-${end} of ${totalEpisodeItems}`;
+        }
+
+        function nextEpisodePage() {
+            if ((currentEpisodePage + 1) * currentEpisodeLimit < totalEpisodeItems) {
+                currentEpisodePage++;
+                loadEpisodes();
+            }
+        }
+
+        function previousEpisodePage() {
+            if (currentEpisodePage > 0) {
+                currentEpisodePage--;
+                loadEpisodes();
+            }
+        }
+
+        // ==================== UTILITIES ====================
+
         function showLoading() {
             document.getElementById('loading').classList.add('active');
         }
@@ -1273,7 +1697,29 @@
             }, 3000);
         }
 
-        // Initialize
+        // ==================== NAVIGATION ====================
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+
+                const view = this.dataset.view;
+                document.querySelectorAll('.view').forEach(v => v.style.display = 'none');
+                
+                if (view === 'series') {
+                    document.getElementById('seriesView').style.display = 'block';
+                    if (config.adminToken) {
+                        loadSeries();
+                    }
+                } else if (view === 'settings') {
+                    document.getElementById('settingsView').style.display = 'block';
+                }
+            });
+        });
+
+        // ==================== INITIALIZATION ====================
+
         loadSettings();
         if (config.adminToken) {
             loadSeries();
@@ -1291,6 +1737,12 @@
         document.getElementById('seriesModal').addEventListener('click', function(e) {
             if (e.target === this) {
                 closeSeriesModal();
+            }
+        });
+
+        document.getElementById('episodeModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeEpisodeModal();
             }
         });
     </script>
